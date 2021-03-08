@@ -3,10 +3,39 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import store from './store/index';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+
+import { gql } from '@apollo/client';
+
+const client = new ApolloClient({
+  uri: 'https://pangaea-interviews.now.sh/api/graphql',
+  cache: new InMemoryCache()
+});
+
+
+client
+  .query({
+    query: gql`
+      query {
+        products{
+          id
+          title
+          image_url
+        }
+      }
+    `
+  })
+  .then(result => {});
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ApolloProvider client={client}>
+      <Provider store={store}>
+      <App />
+      </Provider>
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

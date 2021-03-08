@@ -1,0 +1,2 @@
+export const SET_PRODUCT = "SET_PRODUCT";
+export const FETCH_PRODUCT = "FETCH_PRODUCT";
